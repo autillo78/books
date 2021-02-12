@@ -104,13 +104,18 @@
             </thead>
             <tbody>
                 @foreach ($books as $book)
-                {{$book}}
-                <tr onclick="location.replace('{{route('readings.index')}}')">
-                    <td>{{$book['title']}}</td>
-                    <td>{{$book['pages']}}</td>
-                    <td>{{$book['type']->type}}</td>
-                    <td>{{$book['author']}}</td>
-                    <td>{{$book['format']}} / {{$book['language']->code}}</td>   
+                <tr onclick="location.replace('{{route('books.show', $book->id)}}')">
+                    <td>{{$book->title}}</td>
+                    <td>{{$book->pages}}</td>
+                    <td>{{$book->type->type}}</td>
+                        
+                    <td>
+                    @foreach ($book->authors as $author)
+                        {{$author->name}}@if (!$loop->last), @endif
+                    @endforeach
+                    </td>
+                   
+                    <td>{{$book->format}} / {{$book->language->code}}</td>   
                 </tr>                     
                 @endforeach
             </tbody>

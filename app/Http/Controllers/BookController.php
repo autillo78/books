@@ -17,7 +17,11 @@ class BookController extends Controller
      */
     public function index()
     {
+        // $books = Book::find(4);
+        // return $books->authors;
+
         $books = Book::all();
+
         //$books=$books->bookAuthors;
         $types = BookType::all();
         
@@ -80,7 +84,7 @@ class BookController extends Controller
                 // get last id inserted
                 $lastAuthorId =  DB::getPdo()->lastInsertId();
 
-                DB::insert('insert into book_authors (book_id, author_id) 
+                DB::insert('insert into author_book (book_id, author_id) 
                             values (?, ?)', 
                             [
                                 $lastBookId,
@@ -100,7 +104,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        echo 'hey';
     }
 
     /**

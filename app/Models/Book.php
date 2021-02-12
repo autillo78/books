@@ -16,12 +16,6 @@ class Book extends Model
     }
 
 
-    public function bookAuthors () {
-
-        return $this->hasMany(BookAuthor::class);
-    }
-
-
     public function bookNotes () {
 
         return $this->hasMany(BookNote::class);

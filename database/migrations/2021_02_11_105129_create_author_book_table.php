@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookAuthorsTable extends Migration
+class CreateAuthorBookTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBookAuthorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_authors', function (Blueprint $table) {
+        Schema::create('author_book', function (Blueprint $table) {
             
             // COLUMNS
             $table->smallIncrements('id');
@@ -39,6 +39,6 @@ class CreateBookAuthorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_authors');
+        Schema::dropIfExists('author_book');
     }
 }

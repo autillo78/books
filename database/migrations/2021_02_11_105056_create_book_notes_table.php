@@ -18,7 +18,7 @@ class CreateBookNotesTable extends Migration
             // COLUMNS
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('book_id');
-            $table->text('note');
+            $table->text('text');
             $table->unsignedTinyInteger('language_id');
             $table->string('pages', 12)->nullable();
             //$table->timestamps();

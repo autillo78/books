@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->unsignedSmallInteger('pages');
             $table->unsignedTinyInteger('language_id');
             $table->unsignedSmallInteger('type_id');
-            $table->string('format', 6);
+            $table->unsignedTinyInteger('format_id');
             //$table->timestamps();
             $table->dateTimeTz('created_at', $precision = 0);
 
@@ -33,7 +33,8 @@ class CreateBooksTable extends Migration
             
             // FOREIGN KEYS
             $table->foreign('language_id')->references('id')->on('languages');
-            $table->foreign('type_id')->references('id')->on('book_types');
+            $table->foreign('type_id')->references('id')->on('book_categories');
+            $table->foreign('format_id')->references('id')->on('book_formats');
         });
     }
 

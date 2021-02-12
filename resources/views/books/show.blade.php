@@ -9,7 +9,7 @@
 
         <div class="card-header">
             Book Details
-            <a href="{{route('books.edit', $book->id)}}" class="btn btn-outline-primary  float-right">Update</a>
+            <a href="{{route('books.edit', $book->id)}}" class="btn-sm btn-primary  float-right">Update</a>
         </div>
         <div class="card-body">
         
@@ -36,7 +36,7 @@
                             {{$author->name}}@if (!$loop->last), @endif
                         @endforeach
                         </td>
-                        <td>{{$book->format}} / {{$book->language->code}}</td>
+                        <td>{{$book->format->type}} / {{$book->language->code}}</td>
                         <td>{{$book->created_at->format('d-m-Y')}}</td>
                         @if (!$book->bookEnds->isEmpty())
                             {{-- for now only once --}}
@@ -57,7 +57,7 @@
 
         <div class="card-header">
             Notes
-            <a href="#" class="btn btn-outline-primary  float-right">Add</a>
+            <a href="#" class="btn-sm btn-primary  float-right">Add</a>
         </div>
 
         <div class="card-body">
@@ -97,7 +97,7 @@
 
         <div class="card-header">
             Readings
-            <a href="#" class="btn btn-outline-primary  float-right">Add</a>
+            <a href="#" class="btn-sm btn-primary  float-right">Add</a>
         </div>
 
         <div class="card-body">
@@ -119,7 +119,7 @@
             </table>
 
             @else
-                No notes yet
+                No readings yet
             @endif
             
         </div>

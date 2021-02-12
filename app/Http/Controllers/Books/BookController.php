@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Books;
 
 use App\Http\Controllers\Controller;
 use App\Models\Books\Book;
-use App\Models\Books\BookNote;
-use App\Models\Books\BookType;
+use App\Models\Books\BookCategory;
+use App\Models\Books\BookFormat;
 use App\Models\Books\Language;
+use Database\Seeders\BookFormartsSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,11 +24,11 @@ class BookController extends Controller
         // return $books->authors;
 
         $books = Book::orderBy('id', 'DESC')->get();
-
-        //$books=$books->bookAuthors;
-        $types = BookType::all();
+        $formats = BookFormat::all();
+        $categories = BookCategory::all();
+        $languages = Language::all();
         
-        return view('books.index', compact('books', 'types'));
+        return view('books.index', compact('books', 'categories', 'formats', 'languages'));
     }
 
 
@@ -45,8 +46,9 @@ class BookController extends Controller
                             ->where('code','=', $request['language'])
                             ->first();
         //return $langId->id;
+
         
-        $book = DB::insert('insert into books (title, pages, language_id, format, type_id, created_at) 
+        $book = DB::insert('insert into books (title, pages, language_id, format_id, type_id, created_at) 
                             values (?, ?, ?, ?, ?, ?)', 
                             [
                                 $request['title'], 
@@ -65,12 +67,12 @@ class BookController extends Controller
 
             $authors = explode(',', $request['author']);
 
-            foreach ($authors as $aut) {
+            foreach ($authors as $author) {
 
-                $author = DB::insert('insert into authors (name, surname) 
-                        values (?, ?)', 
+                DB::insert('insert into authors (name) 
+                        values (?)', 
                         [
-                            $aut, 
+                            trim($author), 
                             ''
                         ]);
 
@@ -112,7 +114,12 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        echo 'edit';
+        $book = Book::find($id);
+        $formats = BookFormat::all();
+        $categories = BookCategory::all();
+        $languages = Language::all();
+
+        return view('books.edit',compact('book', 'formats', 'categories', 'languages'));
     }
 
     /**
@@ -124,7 +131,7 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo 'update';
     }
 
     /**

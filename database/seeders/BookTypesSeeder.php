@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\BookType;
+use App\Models\Books\BookCategory;
 use Illuminate\Database\Seeder;
 
 class BookTypesSeeder extends Seeder
@@ -17,7 +17,7 @@ class BookTypesSeeder extends Seeder
         $types = ['computing', 'novel', 'history', 'science', 'psychology'];
 
         foreach ($types as $type) {
-            BookType::create([
+            BookCategory::create([
                 'type' => $type,
             ]);
         }

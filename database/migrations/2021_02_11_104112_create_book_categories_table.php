@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookTypesTable extends Migration
+class CreateBookCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBookTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_types', function (Blueprint $table) {
+        Schema::create('book_categories', function (Blueprint $table) {
             
             // COLUMNS
             $table->smallIncrements('id');
@@ -37,6 +37,6 @@ class CreateBookTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_types');
+        Schema::dropIfExists('book_categories');
     }
 }

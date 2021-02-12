@@ -18,7 +18,7 @@ class CreateLanguagesTable extends Migration
             // COLUMNS
             $table->tinyIncrements('id');
             $table->enum('code', ['es', 'en']);
-           
+            $table->string('name', 30);
             
             // INDEX
 	    

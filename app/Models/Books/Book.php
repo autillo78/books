@@ -36,12 +36,18 @@ class Book extends Model
 
     public function type () {
 
-        return $this->belongsTo(BookType::class);
+        return $this->belongsTo(BookCategory::class);
     }
 
 
     public function authors () {
         
         return $this->belongsToMany(Author::class);
+    }
+
+
+    public function format () {
+
+        return $this->belongsTo(BookFormat::class);
     }
 }

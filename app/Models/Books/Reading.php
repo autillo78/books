@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Books;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BookType extends Model
+class Reading extends Model
 {
     use HasFactory;
-
+    
+    
     public $timestamps = false;
 
-    
-    public function books () {
 
-        return $this->hasMany(Book::class);
+    public function book () {
+
+        return $this->belongsTo(Book::class);
     }
 }

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Books</title>
 
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script src="{{asset('js/app.js')}}"></script>
 
@@ -29,5 +30,12 @@
         @yield('body')
 
     </div>
+
+    <div class="container mt-5">
+        <div class="footer">
+            Books logged
+        </div>
+    </div>
+
 </body>
 </html>

@@ -18,6 +18,7 @@ class CreateReadingsTable extends Migration
             // COLUMNS
             $table->tinyIncrements('id');
             $table->date('date');
+            $table->smallInteger('starting_page');
             $table->unsignedSmallInteger('book_id');
 
             // INDEX

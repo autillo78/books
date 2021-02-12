@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Books;
 
-use App\Models\Book;
-use App\Models\BookType;
-use App\Models\Language;
+use App\Http\Controllers\Controller;
+use App\Models\Books\Book;
+use App\Models\Books\BookNote;
+use App\Models\Books\BookType;
+use App\Models\Books\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +22,7 @@ class BookController extends Controller
         // $books = Book::find(4);
         // return $books->authors;
 
-        $books = Book::all();
+        $books = Book::orderBy('id', 'DESC')->get();
 
         //$books=$books->bookAuthors;
         $types = BookType::all();
@@ -28,15 +30,6 @@ class BookController extends Controller
         return view('books.index', compact('books', 'types'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -84,6 +77,8 @@ class BookController extends Controller
                 // get last id inserted
                 $lastAuthorId =  DB::getPdo()->lastInsertId();
 
+
+                // REPEAT USING SYNC (ELOQUENT)
                 DB::insert('insert into author_book (book_id, author_id) 
                             values (?, ?)', 
                             [
@@ -104,7 +99,9 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        echo 'hey';
+        $book = Book::find($id);
+
+        return view('books.show',compact('book'));
     }
 
     /**
@@ -115,7 +112,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo 'edit';
     }
 
     /**

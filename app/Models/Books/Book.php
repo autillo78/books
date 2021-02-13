@@ -2,6 +2,7 @@
 
 namespace App\Models\Books;
 
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +10,8 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'pages', 'format_id', 'type_id', 'language_code'];
+    //protected $hidden = ['created_at', 'updated_at'];
 
     public function language () {
 

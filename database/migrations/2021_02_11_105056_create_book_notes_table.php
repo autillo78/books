@@ -19,7 +19,7 @@ class CreateBookNotesTable extends Migration
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('book_id');
             $table->text('text');
-            $table->unsignedTinyInteger('language_id');
+            $table->string('language_code', 3);
             $table->string('pages', 12)->nullable();
             //$table->timestamps();
             $table->dateTimeTz('created_at', $precision = 0);
@@ -31,7 +31,7 @@ class CreateBookNotesTable extends Migration
             // PRIMARY KEYS
             
             // FOREIGN KEYS
-            $table->foreign('language_id')->references('id')->on('languages');
+            $table->foreign('language_code')->references('code')->on('languages');
 
         });
     }

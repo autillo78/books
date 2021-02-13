@@ -16,8 +16,7 @@ class CreateLanguagesTable extends Migration
         Schema::create('languages', function (Blueprint $table) {
             
             // COLUMNS
-            $table->tinyIncrements('id');
-            $table->enum('code', ['es', 'en']);
+            $table->string('code', 3);
             $table->string('name', 30);
             
             // INDEX
@@ -25,6 +24,7 @@ class CreateLanguagesTable extends Migration
             // UNIQUE
             
             // PRIMARY KEYS
+            $table->primary('code');
             
             // FOREIGN KEYS
             

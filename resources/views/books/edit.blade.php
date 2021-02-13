@@ -24,8 +24,9 @@
                     <input type="text" name="title" id="title" class="form-control" value="{{$book->title}}" required>
                 </div>
                 <div class="col-6">
-                    <label for="author">Author</label>
-                    <input type="text" name="author" id="author" class="form-control" 
+                    <label for="authors">Author</label>
+                    <input type="hidden" name="authors_ids" value="@foreach ($book->authors as $author){{$author->id}}@if (!$loop->last),@endif @endforeach">
+                    <input type="text" name="authors" id="authors" class="form-control" 
                             value="@foreach ($book->authors as $author){{$author->name}}@if (!$loop->last),@endif @endforeach" required>
                 </div>
             </div>
@@ -36,16 +37,16 @@
                     <input type="number" name="pages" id="pages" class="form-control" value="{{$book->pages}}">
                 </div>            
                 <div class="col-2">
-                    <label for="format">Format</label>
-                    <select name="format" id="format" class="form-control" required>
+                    <label for="format_id">Format</label>
+                    <select name="format_id" id="format_id" class="form-control" required>
                         @foreach ($formats as $format)
                         <option value="{{$format->id}}" @if ($format->id == $book->format->id) selected @endif>{{$format->type}}</option>
                         @endforeach
                     </select>                    
                 </div>
                 <div class="col-4">
-                    <label for="type">Type</label>
-                    <select name="type" id="type" class="form-control">
+                    <label for="type_id">Type</label>
+                    <select name="type_id" id="type_id" class="form-control">
                         @foreach ($categories as $category)
                         <option value="{{$category->id}}" @if ($category->id == $book->type->id) selected @endif>{{$category->type}}</option>                            
                         @endforeach
@@ -57,8 +58,8 @@
                     <br>
                     @foreach ($languages as $lang)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="language" id="{{$lang->code}}" 
-                                value="{{$lang->code}}" @if ($lang->code == $book->language->code) checked @endif>
+                        <input class="form-check-input" type="radio" name="language_id" id="{{$lang->code}}" 
+                                value="{{$lang->id}}" @if ($lang->code == $book->language->code) checked @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach

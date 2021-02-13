@@ -22,9 +22,9 @@
                 </div>
 
                 <div class="col-6">
-                    <label for="author">Author <small>(use , for multiple authors)</small></label>
-                    <input type="text" name="author" id="author"
-                            class="form-control @error('author') is-invalid @enderror"
+                    <label for="authors">Author <small>(use , for multiple authors)</small></label>
+                    <input type="text" name="authors" id="authors"
+                            class="form-control @error('authors') is-invalid @enderror"
                             placeholder="name+surname">
                 </div>
 
@@ -40,9 +40,9 @@
                 </div>
 
                 <div class="col-2">
-                    <label for="format">Format</label>
-                    <select id="format" name="format" 
-                            class="form-control @error('format') is-invalid @enderror"
+                    <label for="format_id">Format</label>
+                    <select id="format_id" name="format_id" 
+                            class="form-control @error('format_id') is-invalid @enderror"
                             required>
                         <option></option>
                         @foreach ($formats as $format)
@@ -52,9 +52,9 @@
                 </div>
                 
                 <div class="col-4">
-                    <label for="type">Type</label>
-                    <select id="type" name="type" 
-                            class="form-control @error('type') is-invalid @enderror"
+                    <label for="type_id">Type</label>
+                    <select id="type_id" name="type_id" 
+                            class="form-control @error('type_id') is-invalid @enderror"
                             required>
                         <option value=""></option>
                         @foreach ($categories as $category) 
@@ -69,7 +69,7 @@
                     <label for="">Language</label><br>
                     @foreach ($languages as $lang)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="language" id="{{$lang->code}}" 
+                        <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
                                 value="{{$lang->code}}" @if ($loop->first) checked @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>

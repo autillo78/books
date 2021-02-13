@@ -13,15 +13,16 @@ class Book extends Model
     protected $fillable = ['title', 'pages', 'format_id', 'type_id', 'language_code'];
     //protected $hidden = ['created_at', 'updated_at'];
 
+
     public function language () {
 
         return $this->belongsTo(Language::class);
     }
 
 
-    public function bookNotes () {
+    public function notes () {
 
-        return $this->hasMany(BookNote::class);
+        return $this->hasMany(BookNote::class)->orderByDesc('id');
     }
     
 

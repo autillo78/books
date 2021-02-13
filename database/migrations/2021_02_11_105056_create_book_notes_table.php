@@ -22,7 +22,7 @@ class CreateBookNotesTable extends Migration
             $table->string('language_code', 3);
             $table->string('pages', 12)->nullable();
             //$table->timestamps();
-            $table->dateTimeTz('created_at', $precision = 0);
+            $table->date('created_at');
                         
             // INDEX
 	    

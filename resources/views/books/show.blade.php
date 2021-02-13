@@ -8,7 +8,7 @@
     <div class="card mt-3">
 
         <div class="card-header">
-            Book Details
+            <b>Book Details</b>
             <a href="{{route('books.edit', $book->id)}}" class="btn-sm btn-primary  float-right">Update</a>
         </div>
         <div class="card-body">
@@ -22,7 +22,7 @@
                         <th scope="col">Author</th>
                         <th scope="col">Format / Lang</th>
                         <th scope="col">Added</th>
-                        <th scope="col">End</th>
+                        <th scope="col">Completed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,13 +56,13 @@
     <div class="card mt-5">
 
         <div class="card-header">
-            Notes
-            <a href="#" class="btn-sm btn-primary  float-right">Add</a>
+            <b>Notes</b>
+            <a href="{{route('bookNote.create', $book->id)}}" class="btn-sm btn-primary  float-right">Add</a>
         </div>
 
         <div class="card-body">
 
-            @if (!$book->bookNotes->isEmpty())
+            @if (!$book->notes->isEmpty())
             <table class="table">
                 <thead>
                     <th>Pages</th>
@@ -71,12 +71,12 @@
                     <th>Date</th>
                 </thead>
                 <tbody>
-                    @foreach ($book->bookNotes as $note)
+                    @foreach ($book->notes as $note)
                     <tr>
                         <td>{{$note->pages}}</td>
-                        <td>{{$note->note}}</td>
+                        <td>{{$note->text}}</td>
                         <td>{{$note->language->code}}</td>
-                        <td>{{$note->created_at->format('d-m-Y H:i')}}</td>
+                        <td>{{$note->created_at->format('d-m-Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -96,7 +96,7 @@
     <div class="card mt-5">
 
         <div class="card-header">
-            Readings
+            <b>Readings</b>
             <a href="#" class="btn-sm btn-primary  float-right">Add</a>
         </div>
 

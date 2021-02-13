@@ -10,6 +10,11 @@ class BookNote extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $fillable = ['pages', 'book_id', 'text', 'language_code', 'created_at'];
+    protected $dates = ['created_at']; //to be able to format the dates ->format('y')
+
 
     public function language () {
 

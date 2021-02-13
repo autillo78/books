@@ -13,7 +13,7 @@
         @method('PUT')
 
         <div class="card-header">
-            Update Book Details
+            <b>Update Book Details</b>
             <input type="submit" value="Save" class="btn-sm btn-primary float-right">
         </div>
 
@@ -25,7 +25,6 @@
                 </div>
                 <div class="col-6">
                     <label for="authors">Author</label>
-                    <input type="hidden" name="authors_ids" value="@foreach ($book->authors as $author){{$author->id}}@if (!$loop->last),@endif @endforeach">
                     <input type="text" name="authors" id="authors" class="form-control" 
                             value="@foreach ($book->authors as $author){{$author->name}}@if (!$loop->last),@endif @endforeach" required>
                 </div>
@@ -54,12 +53,12 @@
                 </div>
                 <div class="col-1"></div>
                 <div class="col-3">
-                    <label for="language">Language</label>
+                    <label for="language_code">Language</label>
                     <br>
                     @foreach ($languages as $lang)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="language_id" id="{{$lang->code}}" 
-                                value="{{$lang->id}}" @if ($lang->code == $book->language->code) checked @endif>
+                        <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
+                                value="{{$lang->code}}" @if ($lang->code == $book->language->code) checked @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach

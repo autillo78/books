@@ -15,7 +15,7 @@
 
     <div class="container">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-grey">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,11 +31,11 @@
 
     </div>
 
-    <div class="container mt-5">
+    <footer class="container mt-5">
         <div class="footer">
-            Books logged
+            books logged
         </div>
-    </div>
+    </footer>
 
 </body>
 </html>

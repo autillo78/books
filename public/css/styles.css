@@ -1,13 +1,17 @@
 .footer{
-    width: 100%;
-    position: fixed;
-    right: 0;
+    position: absolute;
+    left: 0;
     bottom: 0;
-    /* height: 2em; */
+    width: 100%;
+    text-align: center;
     background-color: lightgray;
     padding: .1em;
 }
 
 .pointer{
     cursor: pointer;
+}
+
+.bg-grey{
+    background-color: lightgray;
 }

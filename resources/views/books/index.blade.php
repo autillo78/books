@@ -8,7 +8,7 @@
         @csrf
 
         <div class="card-header">
-            Add New Book
+            <b>Add New Book</b>
             <input type="submit" value="Save" class="btn-sm btn-primary float-right">
         </div>
 
@@ -85,7 +85,7 @@
 {{-- books list --}}
 <div class="card mt-5">
     <div class="card-header">
-        Books
+        <b>Books</b>
     </div>
 
     <div class="card-body">

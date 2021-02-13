@@ -8,6 +8,7 @@ use App\Models\Books\BookCategory;
 use App\Models\Books\BookFormat;
 use App\Models\Language;
 use App\Models\Books\Author;
+use App\Models\Books\BookNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -54,11 +55,13 @@ class BookController extends Controller
         $authorsIds = [];
         $authorsNames = explode(',', $request->authors);
         foreach ($authorsNames as $authorName) {
-            $author = Author::firstOrCreate([
-                'name' => $authorName
-            ]);
+            if ($authorName) {
+                $author = Author::firstOrCreate([
+                    'name' => trim($authorName)
+                ]);
 
-            $authorsIds[] = $author->id;
+                $authorsIds[] = $author->id;
+            }
         }
 
 
@@ -156,19 +159,25 @@ class BookController extends Controller
         $book->pages = $request->pages;
         $book->format_id = $request->format_id;
         $book->type_id = $request->type_id;
-        $book->language_id = $request->language_id;
+        $book->language_code = $request->language_code;
         $book->save();
 
 
-        // now only allow update the same number of authors logged
-        // you can't delete or add authors
-        $authorsIds = explode(',', $request->authors_ids);
-        $authorsNames = explode(',', str_replace(', ', ',', $request->authors));
-        for ($i=0; $i < count($authorsIds); $i++) { 
-            $author = Author::find($authorsIds[$i]);
-            $author->name = $authorsNames[$i];
-            $author->save();
+        $authorsIds = [];
+        $authorsNames = explode(',', $request->authors);
+        foreach ($authorsNames as $authorName) {
+            if ($authorName) {
+                $author = Author::firstOrCreate([
+                    'name' => trim($authorName)
+                ]);
+
+                $authorsIds[] = $author->id;
+            }
         }
+
+        $book->authors()->sync($authorsIds);
+
+        return redirect()->action([BookController::class, 'show'], ['book' => $id]);
     }
 
     /**
@@ -181,4 +190,43 @@ class BookController extends Controller
     {
         //
     }
+
+
+
+    /**
+     * Display the specified note.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createNote($id)
+    {
+        $bookNotes = Book::find($id)->notes;
+        $languages = Language::all();
+
+        return view('books.createNotes', compact('bookNotes', 'id', 'languages'));
+    }
+
+
+    /**
+     * Store a newly created note in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeNote(Request $request, int $id)
+    {
+        BookNote::create([
+            'pages' => $request->pages,
+            'text' => $request->text,
+            'language_code' => $request->language_code,
+            'book_id' => $id,
+            'created_at' => now()
+        ]);
+
+        return redirect()->action([BookController::class, 'show'], ['book' => $id]);
+
+    }
+    
 }

@@ -18,7 +18,7 @@ class CreateBooksTable extends Migration
             // COLUMNS
             $table->smallIncrements('id');
             $table->string('title');
-            $table->unsignedSmallInteger('pages');
+            $table->unsignedSmallInteger('pages')->nullable();
             $table->string('language_code', 3);
             $table->unsignedSmallInteger('type_id');
             $table->unsignedTinyInteger('format_id');

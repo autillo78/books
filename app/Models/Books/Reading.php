@@ -13,8 +13,8 @@ class Reading extends Model
     public $timestamps = false;
 
 
-    public function book () {
-
+    public function book()
+    {
         return $this->belongsTo(Book::class);
     }
 }

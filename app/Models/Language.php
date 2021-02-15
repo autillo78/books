@@ -15,13 +15,13 @@ class Language extends Model
     protected $keyType = 'string'; //primary key is a string not integer
     
 
-    public function books () {
-
+    public function books()
+    {
         return $this->hasMany(Book::class);
     }
 
-    public function bookNotes () {
-
+    public function bookNotes()
+    {
         return $this->hasMany(BookNote::class);
     }
 }

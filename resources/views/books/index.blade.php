@@ -13,17 +13,20 @@
         </div>
 
         <div class="card-body">
+
+            @include('layouts.errorMessage')
+
             <div class="form-row pt-3 pr-3 pl-3">
                 <div class="col-6">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" id="title"
-                            class="form-control @error('name') is-invalid @enderror"
+                    <label for="title">Title <small>*</small></label>
+                    <input type="text" name="title" id="title" value="{{old('title')}}"
+                            class="form-control @error('title') is-invalid @enderror"
                             required autofocus placeholder="title">
                 </div>
 
                 <div class="col-6">
                     <label for="authors">Author <small>(use , for multiple authors)</small></label>
-                    <input type="text" name="authors" id="authors"
+                    <input type="text" name="authors" id="authors" value="{{old('authors')}}"
                             class="form-control @error('authors') is-invalid @enderror"
                             placeholder="name+surname">
                 </div>
@@ -34,31 +37,34 @@
             <div class="form-row p-3">
                 <div class="col-2">
                     <label for="pages">Pages</label>
-                    <input type="number" name="pages" id="pages"
-                            class="form-control @error('pages') is-invalid @enderror"
-                            required>
+                    <input type="number" name="pages" id="pages" value="{{old('pages')}}"
+                            class="form-control @error('pages') is-invalid @enderror">
                 </div>
 
                 <div class="col-2">
-                    <label for="format_id">Format</label>
-                    <select id="format_id" name="format_id" 
+                    <label for="format_id">Format <small>*</small></label>
+                    <select id="format_id" name="format_id"
                             class="form-control @error('format_id') is-invalid @enderror"
                             required>
                         <option></option>
                         @foreach ($formats as $format)
-                            <option value="{{$format->id}}">{{$format->type}}</option>
+                            <option value="{{$format->id}}" @if (old('format_id') == $format->id) selected @endif>
+                                {{$format->type}} 
+                            </option>
                         @endforeach
                     </select>
                 </div>
                 
                 <div class="col-4">
-                    <label for="type_id">Type</label>
+                    <label for="type_id">Type <small>*</small></label>
                     <select id="type_id" name="type_id" 
                             class="form-control @error('type_id') is-invalid @enderror"
                             required>
                         <option value=""></option>
                         @foreach ($categories as $category) 
-                        <option value="{{$category->id}}">{{$category->type}}</option>
+                        <option value="{{$category->id}}" @if (old('type_id') == $category->id) selected @endif>
+                            {{$category->type}}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -70,7 +76,12 @@
                     @foreach ($languages as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
-                                value="{{$lang->code}}" @if ($loop->first) checked @endif>
+                                value="{{$lang->code}}" 
+                                @if (old('language_code'))
+                                    @if (old('language_code') == $lang->code) checked @endif
+                                @else
+                                    @if ($loop->first) checked @endif>
+                                @endif
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach

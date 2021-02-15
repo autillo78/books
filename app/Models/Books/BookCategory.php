@@ -12,8 +12,8 @@ class BookCategory extends Model
     public $timestamps = false;
 
     
-    public function books () {
-
+    public function books()
+    {
         return $this->hasMany(Book::class);
     }
 }

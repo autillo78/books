@@ -14,44 +14,44 @@ class Book extends Model
     //protected $hidden = ['created_at', 'updated_at'];
 
 
-    public function language () {
-
+    public function language()
+    {
         return $this->belongsTo(Language::class);
     }
 
 
-    public function notes () {
-
+    public function notes()
+    {
         return $this->hasMany(BookNote::class)->orderByDesc('id');
     }
     
 
-    public function bookEnds () {
-
+    public function bookEnds()
+    {
         return $this->hasMany(BookEnd::class);
     }
 
 
-    public function readings () {
-
+    public function readings()
+    {
         return $this->hasMany(Reading::class);
     }
 
 
-    public function type () {
-
+    public function type()
+    {
         return $this->belongsTo(BookCategory::class);
     }
 
 
-    public function authors () {
-        
+    public function authors()
+    {        
         return $this->belongsToMany(Author::class);
     }
 
 
-    public function format () {
-
+    public function format()
+    {
         return $this->belongsTo(BookFormat::class);
     }
 }

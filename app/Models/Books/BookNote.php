@@ -16,14 +16,14 @@ class BookNote extends Model
     protected $dates = ['created_at']; //to be able to format the dates ->format('y')
 
 
-    public function language () {
-
+    public function language()
+    {
         return $this->belongsTo(Language::class);
     }
 
     
-    public function book () {
-
+    public function book()
+    {
         return $this->belongsTo(Book::class);
     }
 }

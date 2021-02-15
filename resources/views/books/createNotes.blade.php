@@ -17,11 +17,14 @@
 
         <div class="card-body">
             
+            @include('layouts.errorMessage')
+            
             <div class="form-row pt-3 pl-3 pr-3">
                 <div class="col-2">
                     <label for="pages">Pages</label>
                     <input type="number" name="pages" id="pages"
-                            class="form-control">
+                            class="form-control @error('pages') is-invalid @enderror"
+                            value="{{old('pages')}}">
                 </div>
                 <div class="col-1"></div>
                 <div class="col-3">
@@ -29,7 +32,12 @@
                     @foreach ($languages as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
-                                value="{{$lang->code}}" @if ($loop->first) checked @endif>
+                                value="{{$lang->code}}" 
+                                @if (old('language_code'))
+                                    @if (old('language_code') == $lang->code) checked @endif
+                                @else
+                                    @if ($loop->first) checked @endif
+                                @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach
@@ -39,7 +47,7 @@
             <div class="form-row p-3">
                 <div class="col-12">
                     <label for="text">Note</label>
-                    <textarea name="text" id="text" rows="5" class="form-control"></textarea>
+                    <textarea name="text" id="text" rows="5" class="form-control @error('text') is-invalid @enderror">{{old('text')}}</textarea>
                 </div>
             </div>
 

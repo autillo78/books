@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Books;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewBookNoteRequest extends FormRequest
+class StoreUpdateBookNoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class NewBookNoteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'text'  => 'required',
+            'pages' => 'nullable|numeric'
         ];
     }
 
@@ -37,7 +38,8 @@ class NewBookNoteRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'text.required' => 'Please insert a note',
+            'pages.numeric' => 'Insert a number for pages'
         ];
     }
 }

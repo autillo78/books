@@ -80,8 +80,8 @@
                                 @if (old('language_code'))
                                     @if (old('language_code') == $lang->code) checked @endif
                                 @else
-                                    @if ($loop->first) checked @endif>
-                                @endif
+                                    @if ($loop->first) checked @endif
+                                @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach

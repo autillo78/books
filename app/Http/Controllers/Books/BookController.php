@@ -42,38 +42,10 @@ class BookController extends Controller
     public function store(StoreUpdateBookRequest $request)
     {
         //return $request;
-
         
-        // add book
-        $book = Book::create([
-            'title'         => $request->title,
-            'pages'         => $request->pages,
-            'format_id'     => $request->format_id,
-            'type_id'       => $request->type_id,
-            'language_code' => $request->language_code
-        ]);
-
-
-        // check out if the author exists, if not add it (firstOrCreate)
-        $authorsIds = [];
-        $authorsNames = explode(',', $request->authors);
-        foreach ($authorsNames as $authorName) {
-            if ($authorName) {
-                $author = Author::firstOrCreate([
-                    'name' => trim($authorName)
-                ]);
-
-                $authorsIds[] = $author->id;
-            }
-        }
-
-
-        // link authors with the book
-        $book->authors()->sync($authorsIds);
-
+       (new StoreUpdateBookService)->storeBook($request);
 
         return redirect()->action([BookController::class,'index']);
-
     }
 
     /**

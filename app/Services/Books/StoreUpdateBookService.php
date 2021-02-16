@@ -9,9 +9,12 @@ use App\Models\Books\Book;
 class StoreUpdateBookService 
 {
 
-    public function __construct()
-    {   }
-
+    
+    /**
+     * 
+     * @param StoreUpdateBookRequest $request
+     * @param int $id
+     */
     public function updateBook(StoreUpdateBookRequest $request, int $id)
     {
         // get book by id
@@ -25,12 +28,49 @@ class StoreUpdateBookService
         $book->language_code = $request->language_code;
         $book->save();
 
-
         // get all the authors from string
+        $authorsIds = $this->getAuthorsArrayFromString($request->authors);
+
+        // sync (no attach) the authors
+        $book->authors()->sync($authorsIds);
+
+    }
+
+
+    public function storeBook(StoreUpdateBookRequest $request)
+    {
+        // add book
+        $book = Book::create([
+            'title'         => $request->title,
+            'pages'         => $request->pages,
+            'format_id'     => $request->format_id,
+            'type_id'       => $request->type_id,
+            'language_code' => $request->language_code
+        ]);
+
+         // get all the authors from string
+         $authorsIds = $this->getAuthorsArrayFromString($request->authors);
+
+         // sync (no attach) the authors
+         $book->authors()->sync($authorsIds); 
+
+    }
+
+
+    /**
+     *  Get the Ids for the authors
+     *  If the author doesn't exist it's added
+     * 
+     *  @param string $stringAuthors
+     *  @return array
+     */
+    private function getAuthorsArrayFromString(string $stringAuthors):array
+    {
         $authorsIds = [];
-        $authorsNames = explode(',', $request->authors);
+        $authorsNames = explode(',', $stringAuthors);
         foreach ($authorsNames as $authorName) {
             if ($authorName) {
+                // check out if the author exists if not add it (firstOrCreate), and get its id
                 $author = Author::firstOrCreate([
                     'name' => trim($authorName)
                 ]);
@@ -38,8 +78,6 @@ class StoreUpdateBookService
                 $authorsIds[] = $author->id;
             }
         }
-
-        $book->authors()->sync($authorsIds);
-
+        return $authorsIds;
     }
 }

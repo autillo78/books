@@ -47,7 +47,7 @@
                             class="form-control @error('format_id') is-invalid @enderror"
                             required>
                         <option></option>
-                        @foreach ($formats as $format)
+                        @foreach ($data->getFormats() as $format)
                             <option value="{{$format->id}}" @if (old('format_id') == $format->id) selected @endif>
                                 {{$format->type}} 
                             </option>
@@ -61,7 +61,7 @@
                             class="form-control @error('type_id') is-invalid @enderror"
                             required>
                         <option value=""></option>
-                        @foreach ($categories as $category) 
+                        @foreach ($data->getCategories() as $category) 
                         <option value="{{$category->id}}" @if (old('type_id') == $category->id) selected @endif>
                             {{$category->type}}
                         </option>
@@ -73,7 +73,7 @@
 
                 <div class="col-3">
                     <label for="">Language</label><br>
-                    @foreach ($languages as $lang)
+                    @foreach ($data->getLanguages() as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
                                 value="{{$lang->code}}" 
@@ -111,7 +111,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($books as $book)
+                @foreach ($data->getBooks() as $book)
                 <tr onclick="window.location='{{route('books.show', $book->id)}}'" class="pointer">
                     <td>{{$book->title}}</td>
                     <td>{{$book->pages}}</td>

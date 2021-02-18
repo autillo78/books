@@ -11,8 +11,10 @@ use App\Models\Books\BookFormat;
 use App\Models\Language;
 use App\Models\Books\Author;
 use App\Models\Books\BookNote;
+use App\Services\Books\BookService;
 use App\Services\Books\StoreUpdateBookService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -24,12 +26,14 @@ class BookController extends Controller
     public function index()
     {
 
-        $books  = Book::orderBy('id', 'DESC')->get();
-        $formats = BookFormat::all();
-        $categories = BookCategory::all();
-        $languages = Language::all();
-        
-        return view('books.index', compact('books', 'categories', 'formats', 'languages'));
+        // $books  = Book::orderBy('id', 'DESC')->get();
+        // $formats = BookFormat::all();
+        // $categories = BookCategory::all();
+        // $languages = Language::all();        
+        //return view('books.indexest', compact('books', 'categories', 'formats', 'languages'));
+
+        $data = new BookService();
+        return view('books.index', compact('data'));
     }
 
 
@@ -56,7 +60,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = (new BookService($id))->getBooks();
 
         return view('books.show',compact('book'));
     }
@@ -70,16 +74,12 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::find($id);
-        $formats = BookFormat::all();
-        $categories = BookCategory::all();
-        $languages = Language::all();
-
-        $authorsNames = '';
-        foreach ($book->authors as $author) {
-            $authorsNames .= $author->name .', ';
-        }
-        $authorsNames = rtrim($authorsNames, ', ');
+        $data = new BookService($id);
+        $book = $data->getBookById();
+        $formats = $data->getFormats();
+        $categories = $data->getCategories();
+        $languages = $data->getLanguages();
+        $authorsNames = $data::getAuthorsOneLine($book->authors);
 
         return view('books.edit',compact('book', 'formats', 'categories', 'languages', 'authorsNames'));
     }

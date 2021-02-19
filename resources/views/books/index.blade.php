@@ -108,6 +108,7 @@
                     <th scope="col">Type</th>
                     <th scope="col">Author</th>
                     <th scope="col">Format / Lang</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -123,7 +124,10 @@
                     @endforeach
                     </td>
                    
-                    <td>{{$book->format->type}} / {{$book->language->code}}</td>   
+                    <td>{{$book->format->type}} / {{$book->language->code}}</td>
+                    <td>
+                        <i class="fa fa-eye" aria-hidden="true" title="click on the row to show" data-toggle="tooltip" data-placement="top"></i>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

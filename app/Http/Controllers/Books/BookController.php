@@ -112,6 +112,9 @@ class BookController extends Controller
     }
 
 
+    /* 
+    *   ************************  NOTES  *********************************************
+    */
 
     /**
      * Display the specified note.
@@ -148,5 +151,46 @@ class BookController extends Controller
         return redirect()->action([BookController::class, 'show'], ['book' => $id]);
 
     }
+
+
+    /**
+     * Display the note.
+     *
+     * @param  int  $id
+     * @param  int  $noteId
+     * @return \Illuminate\Http\Response
+     */
+    public function editNote(int $id, int $noteId)
+    {
+        $book = Book::find($id);
+        $note = $book->notes->find($noteId);
+        $languages = Language::all();
+        
+        return view('books.editNote',compact('book', 'note', 'languages'));
+    }
+
+
+    /**
+     * Update the note in storage.
+     *
+     * @param  StoreUpdateBookNoteRequest $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateNote(StoreUpdateBookNoteRequest $request, $id, $noteId)
+    {
+        $book = Book::find($id);
+        $note = $book->notes->find($noteId);
+
+        $note->text = $request->text;
+        $note->pages = $request->pages;
+        $note->language_code = $request->language_code;
+        $note->save();
+        
+
+        // (New StoreUpdateBookService())->updateBook($request, $id);
+        return redirect()->action([BookController::class, 'show'], ['book' => $id]);
+    }
+    
     
 }

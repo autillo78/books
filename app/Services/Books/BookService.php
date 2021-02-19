@@ -17,6 +17,7 @@ class BookService
      */
     protected $books;
 
+
     /**
      * Authors in one line
      * @var String
@@ -45,7 +46,8 @@ class BookService
     /**
      * Class constructor
      * 
-     * @return App\Services\Books\BookService.php
+     * @param int $bookId for a specific book
+     * @return App\Services\Books\BookService
      */
     public function __construct(int $bookId = 0)
     {
@@ -55,6 +57,8 @@ class BookService
 
     /**
      * Set object values
+     * 
+     * @param int $bookId
      */
     protected function setValues(int $bookId)
     {

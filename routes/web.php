@@ -19,6 +19,8 @@ Route::resource('/readings', ReadingController::class)->names('readings');
 
 Route::resource('/books', BookController::class)->names('books');
 Route::get('/books/{id}/notes/create', [BookController::class, 'createNote'])->name('bookNote.create');
+Route::get('/books/{id}/notes/{noteId}/edit', [BookController::class, 'editNote'])->name('bookNote.edit');
+Route::put('/books/{id}/notes/{noteId}', [BookController::class, 'updateNote'])->name('bookNote.update');
 Route::post('/books/{id}/notes', [BookController::class, 'storeNote'])->name('bookNote.store');
 
 

@@ -9,11 +9,11 @@
 
         <div class="card-header">
             <b>Book Details</b>
-            <a href="{{route('books.edit', $book->id)}}" class="btn-sm btn-primary  float-right">Update</a>
+            
         </div>
         <div class="card-body">
         
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Title</th>
@@ -23,11 +23,12 @@
                         <th scope="col">Format / Lang</th>
                         <th scope="col">Added</th>
                         <th scope="col">Completed</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <tr>
+                    <tr onclick="window.location='{{route('books.edit', $book->id)}}'" class="pointer">
                         <td>{{$book->title}}</td>
                         <td>{{$book->pages}}</td>
                         <td>{{$book->type->type}}</td>
@@ -44,6 +45,9 @@
                         @else
                             <td>in proccess</td>
                         @endif
+                        <td>
+                            <i class="far fa-edit" title="click on the row to edit" data-toggle="tooltip" data-placement="top"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -63,20 +67,24 @@
         <div class="card-body">
 
             @if (!$book->notes->isEmpty())
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
-                    <th>Pages</th>
+                    <th>Page</th>
                     <th>Note</th>
                     <th>Lang</th>
                     <th>Date</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     @foreach ($book->notes as $note)
-                    <tr>
+                    <tr onclick="window.location='{{route('bookNote.edit', [$book->id, $note->id])}}'" class="pointer">
                         <td>{{$note->pages}}</td>
                         <td>{{$note->text}}</td>
                         <td>{{$note->language->code}}</td>
                         <td>{{$note->created_at->format('d-m-Y')}}</td>
+                        <td>
+                            <i class="far fa-edit" title="click on the row to edit" data-toggle="tooltip" data-placement="top"></i>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

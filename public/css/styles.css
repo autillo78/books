@@ -1,11 +1,11 @@
 
-body{
+body {
     /*background-image: url("../img/book.svg");
     background-repeat: repeat;
     background-size: 400px; */
 }
 
-.footer{
+.footer {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -15,15 +15,19 @@ body{
     padding: .1em;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-.bg-grey{
+.bg-grey {
     background-color: lightgray;
 }
 
-.card-header{
+.card-header {
+    background-color: #FFEEB3 !important;
+}
+
+.navbar {
     background-image: url("../img/book.svg");
     background-size: 350px;
     background-position-x: 17%;

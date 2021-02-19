@@ -6,15 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Books\StoreUpdateBookRequest;
 use App\Http\Requests\Books\StoreUpdateBookNoteRequest;
 use App\Models\Books\Book;
-use App\Models\Books\BookCategory;
-use App\Models\Books\BookFormat;
 use App\Models\Language;
-use App\Models\Books\Author;
 use App\Models\Books\BookNote;
 use App\Services\Books\BookService;
 use App\Services\Books\StoreUpdateBookService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -44,10 +40,8 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUpdateBookRequest $request)
-    {
-        //return $request;
-        
-       (new StoreUpdateBookService)->storeBook($request);
+    {        
+        BookService::storeBookAndFeatures($request);
 
         return redirect()->action([BookController::class,'index']);
     }
@@ -60,9 +54,9 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = (new BookService($id))->getBooks();
+        $data = (new BookService('show',$id));
 
-        return view('books.show',compact('book'));
+        return view('books.show',compact('data'));
     }
     
 
@@ -74,14 +68,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $data = new BookService($id);
-        $book = $data->getBookById();
-        $formats = $data->getFormats();
-        $categories = $data->getCategories();
-        $languages = $data->getLanguages();
-        $authorsNames = $data::getAuthorsOneLine($book->authors);
-
-        return view('books.edit',compact('book', 'formats', 'categories', 'languages', 'authorsNames'));
+        $data = new BookService('edit', $id);
+        
+        return view('books.edit',compact('data'));
     }
 
     /**
@@ -94,8 +83,7 @@ class BookController extends Controller
     public function update(StoreUpdateBookRequest $request, $id)
     {
         //return $request;
-
-        (New StoreUpdateBookService())->updateBook($request, $id);
+        BookService::updateBookAndFeatures($request, $id);
         
         return redirect()->action([BookController::class, 'show'], ['book' => $id]);
     }

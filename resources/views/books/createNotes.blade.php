@@ -7,7 +7,7 @@
 
 <div class="card mt-3">
 
-    <form action="{{route('bookNote.store', $id)}}" method="POST">
+    <form action="{{route('bookNote.store', $data->getBookId())}}" method="POST">
         @csrf
 
         <div class="card-header">
@@ -29,7 +29,7 @@
                 <div class="col-1"></div>
                 <div class="col-3">
                     <label for="">Language</label><br>
-                    @foreach ($languages as $lang)
+                    @foreach ($data->getLanguages() as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
                                 value="{{$lang->code}}" 

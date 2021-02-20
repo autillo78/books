@@ -5,12 +5,7 @@ namespace App\Http\Controllers\Books;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Books\StoreUpdateBookRequest;
 use App\Http\Requests\Books\StoreUpdateBookNoteRequest;
-use App\Models\Books\Book;
-use App\Models\Language;
-use App\Models\Books\BookNote;
 use App\Services\Books\BookService;
-use App\Services\Books\StoreUpdateBookService;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -21,14 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-
-        // $books  = Book::orderBy('id', 'DESC')->get();
-        // $formats = BookFormat::all();
-        // $categories = BookCategory::all();
-        // $languages = Language::all();        
-        //return view('books.indexest', compact('books', 'categories', 'formats', 'languages'));
-
-        $data = new BookService();
+        $data = (new BookService())->setValues('all');
+        
         return view('books.index', compact('data'));
     }
 
@@ -54,7 +43,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $data = (new BookService('show',$id));
+        $data = (new BookService())->setValues('none', $id);
 
         return view('books.show',compact('data'));
     }
@@ -68,7 +57,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $data = new BookService('edit', $id);
+        $data = (new BookService())->setValues('all', $id);
         
         return view('books.edit',compact('data'));
     }
@@ -85,7 +74,7 @@ class BookController extends Controller
         //return $request;
         BookService::updateBookAndFeatures($request, $id);
         
-        return redirect()->action([BookController::class, 'show'], ['book' => $id]);
+        return redirect()->action([BookController::class, 'show'], ['id' => $id]);
     }
 
     /**
@@ -112,10 +101,9 @@ class BookController extends Controller
      */
     public function createNote($id)
     {
-        $bookNotes = Book::find($id)->notes;
-        $languages = Language::all();
+        $data = (new BookService)->setValues('languages', $id, 0);
 
-        return view('books.createNotes', compact('bookNotes', 'id', 'languages'));
+        return view('books.createNotes', compact('data'));
     }
 
 
@@ -128,13 +116,7 @@ class BookController extends Controller
      */
     public function storeNote(StoreUpdateBookNoteRequest $request, int $id)
     {
-        BookNote::create([
-            'pages'         => $request->pages,
-            'text'          => $request->text,
-            'language_code' => $request->language_code,
-            'book_id'       => $id,
-            'created_at'    => now()
-        ]);
+        (new BookService)::storeNote($request, $id);
 
         return redirect()->action([BookController::class, 'show'], ['book' => $id]);
 
@@ -150,11 +132,9 @@ class BookController extends Controller
      */
     public function editNote(int $id, int $noteId)
     {
-        $book = Book::find($id);
-        $note = $book->notes->find($noteId);
-        $languages = Language::all();
-        
-        return view('books.editNote',compact('book', 'note', 'languages'));
+        $data = (new BookService)->setValues('languages', $id, $noteId);
+
+        return view('books.editNote',compact('data'));
     }
 
 
@@ -167,16 +147,8 @@ class BookController extends Controller
      */
     public function updateNote(StoreUpdateBookNoteRequest $request, $id, $noteId)
     {
-        $book = Book::find($id);
-        $note = $book->notes->find($noteId);
-
-        $note->text = $request->text;
-        $note->pages = $request->pages;
-        $note->language_code = $request->language_code;
-        $note->save();
+        (new BookService)::updateNote($request, $id, $noteId);
         
-
-        // (New StoreUpdateBookService())->updateBook($request, $id);
         return redirect()->action([BookController::class, 'show'], ['book' => $id]);
     }
     

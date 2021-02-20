@@ -17,28 +17,30 @@
 </head>
 <body>
 
-    <div class="container">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-grey">
+    <nav class="navbar navbar-expand-lg navbar-light bg-grey">
+        <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                <a class="nav-link" href="{{route('readings.index')}}">Readings</a>
-                <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                <a class="nav-link font-weight-bold" href="{{route('readings.index')}}">Readings</a>
+                <a class="nav-link font-weight-bold" href="{{route('books.index')}}">Books</a>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+    <div class="container">
 
         @yield('body')
 
     </div>
 
-    <footer class="container mt-5">
-        <div class="footer">
+    <footer class="mt-5">
+        {{-- <div class="footer">
             books logged
-        </div>
+        </div> --}}
     </footer>
 
 </body>

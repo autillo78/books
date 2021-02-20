@@ -10,7 +10,7 @@
 
 <div class="card mt-3">
 
-    <form action="{{route('bookNote.update', [$book->id, $note->id])}}" method="post">
+    <form action="{{route('bookNote.update', [$data->getBookId(), $data->getNoteById()->id])}}" method="post">
     @csrf
     @method('PUT')
 
@@ -21,7 +21,6 @@
 
         <div class="card-body">
             <div class="row pl-5">
-                <b>{{ucwords($book->title)}}</b>
             </div>
 
             <div class="form-row pt-3 pl-3 pr-3">
@@ -29,12 +28,12 @@
                     <label for="pages">Page</label>
                     <input type="number" name="pages" id="pages" 
                            class="form-control @error('pages') is-invalid @enderror"
-                           value="{{old('pages', $note->pages)}}">
+                           value="{{old('pages', $data->getNoteById()->pages)}}">
                 </div>
                 <div class="col-1"></div>
                 <div class="col-3">
                     <label for="">Language</label><br>
-                    @foreach ($languages as $lang)
+                    @foreach ($data->getLanguages() as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
                                 value="{{$lang->code}}" 
@@ -52,7 +51,7 @@
                 <div class="col">
                     <label for="text">Note</label>
                     <textarea name="text" id="text" rows="5" 
-                              class="form-control @error('text') is-invalid @enderror">{{old('text', $note->text)}}</textarea>
+                              class="form-control @error('text') is-invalid @enderror">{{old('text', $data->getNoteById()->text)}}</textarea>
                 </div>
             </div>
         </div>

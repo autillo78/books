@@ -8,7 +8,7 @@
 
 <div class="card mt-3">
 
-    <form action="{{route('books.update', $data->getBookById()->id)}}" method="post">
+    <form action="{{route('books.update', $data->getBookId())}}" method="post">
         @csrf
         @method('PUT')
 
@@ -21,7 +21,7 @@
             <div class="form-row pt-3 pr-3 pl-3">
                 <div class="col-6">
                     <label for="title">Title <small>*</small></label>
-                    <input type="text" name="title" id="title" class="form-control" value="{{$data->getBookById()->title}}" required>
+                    <input type="text" name="title" id="title" class="form-control" value="{{$data->getBooks()->title}}" required>
                 </div>
                 <div class="col-6">
                     <label for="authors">Author <small>(use , for multiple authors)</label>
@@ -33,13 +33,13 @@
             <div class="form-row p-3">
                 <div class="col-2">
                     <label for="pages">Pages</label>
-                    <input type="number" name="pages" id="pages" class="form-control" value="{{$data->getBookById()->pages}}">
+                    <input type="number" name="pages" id="pages" class="form-control" value="{{$data->getBooks()->pages}}">
                 </div>            
                 <div class="col-2">
                     <label for="format_id">Format <small>*</small></label>
                     <select name="format_id" id="format_id" class="form-control" required>
                         @foreach ($data->getFormats() as $format)
-                        <option value="{{$format->id}}" @if ($format->id == $data->getBookById()->format->id) selected @endif>{{$format->type}}</option>
+                        <option value="{{$format->id}}" @if ($format->id == $data->getBooks()->format->id) selected @endif>{{$format->type}}</option>
                         @endforeach
                     </select>                    
                 </div>
@@ -47,7 +47,7 @@
                     <label for="type_id">Type <small>*</small></label>
                     <select name="type_id" id="type_id" class="form-control">
                         @foreach ($data->getCategories() as $category)
-                        <option value="{{$category->id}}" @if ($category->id == $data->getBookById()->type->id) selected @endif>{{$category->type}}</option>                            
+                        <option value="{{$category->id}}" @if ($category->id == $data->getBooks()->type->id) selected @endif>{{$category->type}}</option>                            
                         @endforeach
                     </select>
                 </div>
@@ -58,7 +58,7 @@
                     @foreach ($data->getLanguages() as $lang)
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="language_code" id="{{$lang->code}}" 
-                                value="{{$lang->code}}" @if ($lang->code == $data->getBookById()->language->code) checked @endif>
+                                value="{{$lang->code}}" @if ($lang->code == $data->getBooks()->language->code) checked @endif>
                         <label class="form-check-label" for="{{$lang->code}}">{{$lang->name}}</label>
                     </div>
                     @endforeach

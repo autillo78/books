@@ -2,33 +2,34 @@
 
 namespace App\Services\Books;
 
+use App\Http\Requests\Books\StoreUpdateBookNoteRequest;
 use App\Models\Books\Book;
 use App\Models\Books\BookCategory;
 use App\Models\Books\BookFormat;
 use App\Models\Language;
 use App\Http\Requests\Books\StoreUpdateBookRequest;
 use App\Models\Books\Author;
+use App\Models\Books\BookNote;
 
 class BookService 
 {
 
-     /**
+    /**
      * Book id
-     * @var int
+     * @var int $bookId; 
      */
-    protected $bookId;
-
-     /**
-     * Controller method
-     * @var string
-     */
-    protected $method;
 
     /**
      * Book/s
      * @var Book
      */
     protected $books;
+
+    /**
+     * Note
+     * @var BookNote
+     */
+    protected $noteById;
 
     /**
      * Authors in one line
@@ -59,45 +60,76 @@ class BookService
     /**
      * Class constructor
      * 
-     * @param  string       $method method used in the controller
-     * @param  int          $bookId for a specific book
-     * @return BookService
      */
-    public function __construct(string $method = 'index', int $bookId = 0)
-    {
-        $this->bookId = $bookId;
-        $this->method = $method;
-
-        $this->setValues();
-    }
+    public function __construct() {}
 
 
     /**
      * Set object values
      * 
+     * @param string $features all|languages|formats|categories|none
+     * @param int    $bookId all the books or just one by id
+     * @param int    $noteId 
+     * @return BookService
      */
-    protected function setValues()
+    public function setValues(string $features = 'none', int $bookId = 0, int $noteId = -1)
     {
-        // get books features (languages, formats...) only for index and edit
-        if (in_array($this->method, ['index', 'edit'])) {
-
-            $this->setCategories();
-            $this->setLanguages();
-            $this->setFormats();
+        
+        switch ($features) {
+            case 'all':
+                $this->setCategories();
+                $this->setLanguages();
+                $this->setFormats();
+                break;
+            
+            case 'languages':
+                $this->setLanguages();
+                break;            
         }
+        
+        $this->setBookId($bookId);
 
-        // get all the books or just one by id
-        if ($this->bookId === 0) {
-
+        // get all the books 
+        if ($bookId === 0) {
             $this->setBooks();
-        } else {
-
-            $book = $this->setBookById($this->bookId);
-            $this->setAuthorsOneLine($book);
         }
+        // for notes only (no save here the book obj)
+        elseif ($noteId >= 0) {
+            $this->setNoteById($noteId);
+        }
+        // just one book by id
+        else {
+            $this->setBookById();
+            $this->setAuthorsOneLine();
+        }
+
+        return $this;
     }
 
-    
+
+    /**
+     *  Get book id
+     * 
+     * @return int $bookId
+     */
+    public function getBookId()
+    {
+        return $this->bookId;
+    }
+
+
+    /**
+     * Set book id
+     * 
+     * @param int $bookId
+     * @return App\Models\Books\Book
+     */
+    protected function setBookId($bookId)
+    {
+        $this->bookId = $bookId;
+    }
+
+
     /**
      * Get all the books
      * 
@@ -119,27 +151,39 @@ class BookService
         $this->books = Book::all();
     }
 
-    /**
-     * Get book by id
-     * 
-     * @return App\Models\Books\Book
-     */
-    public function getBookById()
-    {
-        return $this->books;
-    }
 
     /**
      * Get book by id
      * 
-     * @param int $id
      * @return App\Models\Books\Book
      */
-    protected function setBookById(int $id)
+    protected function setBookById()
     {
-        return $this->books = Book::find($id);
+        $this->books = Book::find($this->getBookId());
+    }
+
+
+    /**
+     * Get note by id
+     * 
+     * @return BookNote 
+     */
+    public function getNoteById()
+    {
+        return $this->noteById;
     }
     
+
+    /**
+     * Set specific note from a book
+     * 
+     * @param int  $noteId
+     */
+    protected function setNoteById($noteId)
+    {
+        $this->noteById = Book::find($this->getBookId())->notes()->find($noteId);
+    }
+
 
     /**
      * Get all the categories
@@ -207,13 +251,11 @@ class BookService
 
     /**
      * Set all the authors split by comas
-     * 
-     * @param  App\Models\Books\Book $book
      */
-    protected function setAuthorsOneLine($book)
+    protected function setAuthorsOneLine()
     {
         $authorsNames = '';
-        foreach ($book->authors as $author) {
+        foreach ($this->getBooks()->authors as $author) {
             $authorsNames .= $author->name .', ';
         }
 
@@ -308,6 +350,45 @@ class BookService
         }
 
         return $authorsIds;
+    }
+
+
+
+    /**
+     * Update note
+     * 
+     * @param StoreUpdateBookNoteRequest $request
+     * @param int $bookId
+     * @param int $noteId
+     */
+    public static function updateNote(StoreUpdateBookNoteRequest $request, int $bookId, int $noteId)
+    {
+        // get book by id
+        $book = Book::find($bookId);
+        $note = $book->notes->find($noteId);
+
+        $note->text = $request->text;
+        $note->pages = $request->pages;
+        $note->language_code = $request->language_code;
+        $note->save();
+    }
+
+
+    /**
+     * save a new note for a book by id
+     * 
+     * @param StoreUpdateBookNoteRequest $request
+     * @param int $bookId
+     */
+    public static function storeNote(StoreUpdateBookNoteRequest $request, int $bookId)
+    {
+        BookNote::create([
+            'pages'         => $request->pages,
+            'text'          => $request->text,
+            'language_code' => $request->language_code,
+            'book_id'       => $bookId,
+            'created_at'    => now()
+        ]);
     }
 
 }

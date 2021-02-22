@@ -16,9 +16,9 @@ class CreateReadingsTable extends Migration
         Schema::create('readings', function (Blueprint $table) {
             
             // COLUMNS
-            $table->tinyIncrements('id');
+            $table->smallIncrements('id');
             $table->date('date');
-            $table->smallInteger('starting_page');
+            $table->smallInteger('last_page');
             $table->unsignedSmallInteger('book_id');
 
             // INDEX

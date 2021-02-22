@@ -14,7 +14,7 @@
     @csrf
     @method('PUT')
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Edit Note</b>
             <input type="submit" value="Update" class="btn-sm btn-primary float-right">
         </div>

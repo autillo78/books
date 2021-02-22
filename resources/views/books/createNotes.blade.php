@@ -10,7 +10,7 @@
     <form action="{{route('bookNote.store', $data->getBookId())}}" method="POST">
         @csrf
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Add Note</b>
             <input type="submit" value="Save" class="btn-sm btn-primary float-right">
         </div>

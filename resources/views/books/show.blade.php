@@ -7,7 +7,7 @@
 
     <div class="card mt-3">
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Book Details</b>
             
         </div>
@@ -59,7 +59,7 @@
     {{-- notes  --}}
     <div class="card mt-5">
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Notes</b>
             <a href="{{route('bookNote.create', $data->getBooks()->id)}}" class="btn-sm btn-primary  float-right">Add</a>
         </div>
@@ -103,9 +103,8 @@
     {{-- readings  --}}
     <div class="card mt-5">
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Readings</b>
-            <a href="#" class="btn-sm btn-primary  float-right">Add</a>
         </div>
 
         <div class="card-body">

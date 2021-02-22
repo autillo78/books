@@ -12,6 +12,10 @@ class Reading extends Model
     
     public $timestamps = false;
 
+    protected $fillable = ['date', 'last_page', 'book_id'];
+    
+    protected $dates = ['date'];
+
 
     public function book()
     {

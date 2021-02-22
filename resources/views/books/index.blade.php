@@ -7,7 +7,7 @@
     <form action="{{route('books.store')}}" method="POST">
         @csrf
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Add New Book</b>
             <input type="submit" value="Save" class="btn-sm btn-primary float-right">
         </div>
@@ -95,7 +95,7 @@
 
 {{-- books list --}}
 <div class="card mt-5">
-    <div class="card-header">
+    <div class="card-header bg-card-header">
         <b>Books</b>
     </div>
 

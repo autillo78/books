@@ -12,7 +12,7 @@
         @csrf
         @method('PUT')
 
-        <div class="card-header">
+        <div class="card-header bg-card-header">
             <b>Update Book Details</b>
             <input type="submit" value="Save" class="btn-sm btn-primary float-right">
         </div>
@@ -41,7 +41,7 @@
                         @foreach ($data->getFormats() as $format)
                         <option value="{{$format->id}}" @if ($format->id == $data->getBooks()->format->id) selected @endif>{{$format->type}}</option>
                         @endforeach
-                    </select>                    
+                    </select>
                 </div>
                 <div class="col-4">
                     <label for="type_id">Type <small>*</small></label>

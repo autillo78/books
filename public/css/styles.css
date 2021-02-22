@@ -27,7 +27,7 @@ body {
     background-color: lightgray;
 }
 
-.card-header {
+.bg-card-header {
     background-color: #FFEEB3 !important;
 }
 
@@ -36,4 +36,5 @@ body {
     background-size: 350px;
     background-position-x: 17%;
 }
+
 

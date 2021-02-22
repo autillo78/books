@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/readings', ReadingController::class)->names('readings');
+// reading
+Route::resource('/readings', ReadingController::class)
+    ->only(['index', 'create', 'store'])
+    ->names('readings');
 
+// books and notes
 Route::resource('/books', BookController::class)->names('books');
 Route::get('/books/{id}/notes/create', [BookController::class, 'createNote'])->name('bookNote.create');
 Route::get('/books/{id}/notes/{noteId}/edit', [BookController::class, 'editNote'])->name('bookNote.edit');
@@ -24,9 +28,5 @@ Route::put('/books/{id}/notes/{noteId}', [BookController::class, 'updateNote'])-
 Route::post('/books/{id}/notes', [BookController::class, 'storeNote'])->name('bookNote.store');
 
 
-Route::redirect('/', '/books');
-// Route::get('/', function () {
-//     return redirect('/books');
-//     //return redirect()->action([ReadingController::class, 'index']); // it has to exist the '/reading' route
-// });
+Route::redirect('/', '/readings');
 

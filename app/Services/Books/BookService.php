@@ -148,7 +148,7 @@ class BookService
      */
     protected function setBooks()
     {
-        $this->books = Book::all();
+        $this->books = Book::orderBy('id', 'desc')->get();
     }
 
 
